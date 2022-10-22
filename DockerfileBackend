@@ -1,12 +1,17 @@
 FROM ruby:3.0.2-slim
-# RUN apt-get update -qq && apt-get install -y build-essential libpq-dev nodejs
-RUN apt-get update -qq && apt-get install -y build-essential libsqlite3-dev nodejs
+
+# PG
+RUN apt-get update -qq && apt-get install -y build-essential libpq-dev nodejs
+
+# SQLITE 3
+# RUN apt-get update -qq && apt-get install -y build-essential libsqlite3-dev nodejs 
+
 RUN mkdir -p /app/backend
 WORKDIR /app/backend
 COPY api/Gemfile /app/backend/Gemfile
 COPY api/Gemfile.lock /app/backend/Gemfile.lock
 RUN bundle install
-COPY api /app/backend
+# COPY api /app/backend
 
 # Add a script to be executed every time the container starts.
 # COPY entrypoint.sh /usr/bin/

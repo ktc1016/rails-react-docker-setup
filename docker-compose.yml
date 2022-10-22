@@ -23,7 +23,7 @@ services:
       context: .
       dockerfile: DockerfileBackend
     volumes:
-      - ./api:/app/backend/api
+      - ./api:/app/backend/
     ports:
       - "3001:3001"
     depends_on:
