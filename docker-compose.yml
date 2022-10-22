@@ -2,9 +2,9 @@ version: '3'
 services:
   frontend:
     image: "node:16-alpine"
-    working_dir: /myapp/frontend
+    working_dir: /app/frontend
     volumes:
-      - ./blog_react:/myapp/frontend
+      - ./react:/app/frontend
     ports:
       - "3000:3000"
     command: "yarn start"
@@ -23,7 +23,7 @@ services:
       context: .
       dockerfile: DockerfileBackend
     volumes:
-      - ./blog_api:/app/backend/blog_api
+      - ./api:/app/backend/api
     ports:
       - "3001:3001"
     depends_on:
