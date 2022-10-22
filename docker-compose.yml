@@ -1,0 +1,30 @@
+version: '3'
+services:
+  frontend:
+    image: "node:16-alpine"
+    working_dir: /myapp/frontend
+    volumes:
+      - ./blog_react:/myapp/frontend
+    ports:
+      - "3000:3000"
+    command: "yarn start"
+    depends_on:
+      - backend
+  db:
+    image: postgres:14-alpine3.15
+    environment:
+            POSTGRES_PASSWORD: 'postgres'
+    ports:
+        - "5432:5432"
+    volumes:
+        - ./tmp/db:/var/lib/postgresql/data
+  backend:
+    build:
+      context: .
+      dockerfile: DockerfileBackend
+    volumes:
+      - ./blog_api:/app/backend/blog_api
+    ports:
+      - "3001:3001"
+    depends_on:
+      - db

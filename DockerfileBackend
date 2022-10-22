@@ -1,0 +1,18 @@
+FROM ruby:3.0.2-slim
+# RUN apt-get update -qq && apt-get install -y build-essential libpq-dev nodejs
+RUN apt-get update -qq && apt-get install -y build-essential libsqlite3-dev nodejs
+RUN mkdir -p /app/backend
+WORKDIR /app/backend
+COPY blog_api/Gemfile /app/backend/Gemfile
+COPY blog_api/Gemfile.lock /app/backend/Gemfile.lock
+RUN bundle install
+COPY blog_api /app/backend
+
+# Add a script to be executed every time the container starts.
+# COPY entrypoint.sh /usr/bin/
+# RUN chmod +x /usr/bin/entrypoint.sh
+# ENTRYPOINT ["entrypoint.sh"]
+
+EXPOSE 3001
+
+CMD rails s -p 3001 -b '0.0.0.0'
